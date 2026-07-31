@@ -14,3 +14,8 @@ class ProductionConfig(Config):
     DEBUG = False
     # Fallback to local sqlite for testing if DATABASE_URL is not set
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///prod.db'
+
+config_by_name = {
+    'dev': DevelopmentConfig,
+    'prod': ProductionConfig
+}
