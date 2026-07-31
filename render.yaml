@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: commodity-forecasting
+    runtime: python
+    buildCommand: "pip install -r requirements.txt gunicorn && python scripts/init_system.py"
+    startCommand: "gunicorn -w 1 -b 0.0.0.0:10000 run:app"
+    envVars:
+      - key: FLASK_CONFIG
+        value: prod
+      - key: PYTHON_VERSION
+        value: 3.12
