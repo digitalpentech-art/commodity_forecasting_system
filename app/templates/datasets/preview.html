@@ -1,0 +1,7 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<h2>Dataset Preview</h2>
+<div class="table-responsive">{{ data | safe }}</div>
+<a href="{{ url_for('datasets.list_datasets') }}" class="btn btn-secondary mt-3">Back to Datasets</a>
+{% endblock %}

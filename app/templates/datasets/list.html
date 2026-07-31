@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<h2>Datasets</h2>
+<a href="{{ url_for('datasets.upload_dataset') }}" class="btn btn-primary mb-3">Upload Dataset</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Filename</th>
+            <th>Version</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in datasets %}
+        <tr>
+            <td>{{ d.filename }}</td>
+            <td>{{ d.version }}</td>
+            <td><a href="{{ url_for('datasets.preview_dataset', id=d.id) }}" class="btn btn-sm btn-info">Preview</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

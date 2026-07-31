@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<h2>Commodity Price Forecast</h2>
+<form method="POST" class="row g-3">
+    <div class="col-md-4">
+        <select name="commodity_id" class="form-select" required>
+            {% for c in commodities %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select name="market_id" class="form-select" required>
+            {% for m in markets %}
+            <option value="{{ m.id }}">{{ m.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="date" class="form-control" required>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary">Forecast</button>
+    </div>
+</form>
+
+{% if prediction %}
+    <div class="alert alert-success mt-4">
+        <h3>Predicted Price: {{ prediction }}</h3>
+    </div>
+{% endif %}
+{% endblock %}

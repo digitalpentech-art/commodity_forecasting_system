@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: commodity_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  redis:
+    image: redis:alpine
+
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 run:app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/commodity_db
+      FLASK_CONFIG: prod
+      SECRET_KEY: supersecretkey
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:

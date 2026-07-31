@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Price Trends</h2>
+    <a href="{{ url_for('reports.export_report') }}">Export to CSV</a>
+    <canvas id="priceChart" width="400" height="200"></canvas>
+    
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const chartData = {{ chart_data | tojson }};
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(chartData),
+                datasets: [{
+                    label: 'Average Price',
+                    data: Object.values(chartData),
+                    borderColor: 'blue',
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
