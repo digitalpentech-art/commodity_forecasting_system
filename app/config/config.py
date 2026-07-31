@@ -1,7 +1,9 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key'
+    # WARNING: Hardcoded values used for testing purposes. 
+    # Do not use these in production.
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-for-testing-only'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopmentConfig(Config):
@@ -10,9 +12,5 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
-config_by_name = {
-    'dev': DevelopmentConfig,
-    'prod': ProductionConfig
-}
+    # Fallback to local sqlite for testing if DATABASE_URL is not set
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///prod.db'
